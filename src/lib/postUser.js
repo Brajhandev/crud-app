@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const postUser = async (body) => {
-    const users = await axios.post("http://users-crud.academlo.tech/users/", body);
+    const users = await axios.post("https://users-crud.academlo.tech/users/", body);
     return users;
 };
 
