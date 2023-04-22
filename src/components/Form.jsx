@@ -1,12 +1,13 @@
 import React from "react";
 import BtnSave from "./BtnSave";
-
 import postUser from "../lib/postUser";
 import patchUser from "../lib/patchUser";
 import Swal from "sweetalert2";
 
+
 const Form = ({ setshowModal, useForm2, setEdit, edit }) => {
-  const { register, handleSubmit, reset } = useForm2;
+  
+  const { register, handleSubmit, reset, formState: {errors} } = useForm2;
 
   const defaultValues = {
     email: "",
@@ -42,7 +43,7 @@ const Form = ({ setshowModal, useForm2, setEdit, edit }) => {
   };
 
   return (
-    <div className="absolute top-0 bottom-0 left-0 right-0 m-auto bg-slate-500/60 flex justify-center items-center lg:items-end py-10">
+    <div className="fixed top-0 bottom-0 left-0 right-0 m-auto bg-slate-500/60 flex justify-center items-center lg:items-end py-10">
       <form
         className=" text-white flex flex-col gap-4 bg-fondo rounded-lg px-8 py-5 pb-8 w-[90%] md:w-[70%] lg:px-16 lg:py-10"
         onSubmit={handleSubmit(submit)}
@@ -54,18 +55,20 @@ const Form = ({ setshowModal, useForm2, setEdit, edit }) => {
             <input
               className="h-[42px] md:h-[42px] bg-transparent border border-[#E5E5E5] rounded-md pl-4 text-[16px]  placeholder:text-white"
               type="text"
-              placeholder="Enter name"
+              placeholder="Enter name *"
               {...register("first_name")}
             />
+            <p className=" text-red-800">{errors.first_name?.message}</p>
           </div>
           <div className="flex flex-col lg:w-1/3">
             <label htmlFor="">Last Name</label>
             <input
               className="h-[42px] md:h-[42px] bg-transparent border border-[#E5E5E5] rounded-md pl-4 text-[16px] placeholder:text-white"
               type="text"
-              placeholder="Enter last name"
+              placeholder="Enter last name *"
               {...register("last_name")}
             />
+            <p className=" text-red-800">{errors.last_name?.message}</p>
           </div>
           <div className="flex flex-col lg:w-1/3">
             <label htmlFor="">Birthday</label>
@@ -74,6 +77,7 @@ const Form = ({ setshowModal, useForm2, setEdit, edit }) => {
               type="date"
               {...register("birthday")}
             />
+            <p className=" text-red-800">{errors.birthday?.message}</p>
           </div>
         </div>
         <div className="flex flex-col lg:flex-row  gap-3">
@@ -82,19 +86,21 @@ const Form = ({ setshowModal, useForm2, setEdit, edit }) => {
             <input
               className="h-[42px] md:h-[42px] bg-transparent border border-[#E5E5E5] rounded-md pl-4 text-[16px] placeholder:text-white"
               type="text"
-              placeholder="Enter email"
+              placeholder="Enter email *"
               {...register("email")}
             />
+            <p className=" text-red-800">{errors.email?.message}</p>
           </div>
           <div className="flex flex-col lg:w-[40%]">
             <label htmlFor="">Password</label>
             <input
               className="h-[42px] md:h-[42px] bg-transparent border border-[#E5E5E5] rounded-md pl-4 text-[16px] placeholder:text-white"
               type="password"
-              placeholder="Password"
+              placeholder="Password *"
               autoComplete=""
               {...register("password")}
             />
+            <p className=" text-red-800">{errors.password?.message}</p>
           </div>
         </div>
         <BtnSave />
