@@ -3,6 +3,7 @@ import BtnSave from "./BtnSave";
 
 import postUser from "../lib/postUser";
 import patchUser from "../lib/patchUser";
+import Swal from "sweetalert2";
 
 const Form = ({ setshowModal, useForm2, setEdit, edit }) => {
   const { register, handleSubmit, reset } = useForm2;
@@ -19,11 +20,21 @@ const Form = ({ setshowModal, useForm2, setEdit, edit }) => {
     if (edit) {
       patchUser(edit, data)
       .then(res => {
+        Swal.fire(
+          'Buen Trabajo!',
+          'Usuario Actualizado con exito!',
+          'success'
+        )
           setEdit(null)
           setshowModal((showModal) => !showModal);
       })
     } else {
       postUser(data).then((res) => {
+        Swal.fire(
+          'Buen Trabajo!',
+          'Usuario Agregado con exito!',
+          'success'
+        )
         reset(defaultValues);
         setshowModal((showModal) => !showModal);
       });
@@ -36,7 +47,7 @@ const Form = ({ setshowModal, useForm2, setEdit, edit }) => {
         className=" text-white flex flex-col gap-4 bg-fondo rounded-lg px-8 py-5 pb-8 w-[90%] md:w-[70%] lg:px-16 lg:py-10"
         onSubmit={handleSubmit(submit)}
       >
-        <h2 className=" text-2xl font-bold">Create New User</h2>
+        <h2 className=" text-2xl font-bold"> {edit ? 'Edit User' : 'Create New User'}</h2>
         <div className=" flex flex-col lg:flex-row gap-3">
           <div className="flex flex-col lg:w-1/3">
             <label htmlFor="">Name</label>

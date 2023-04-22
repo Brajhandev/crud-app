@@ -3,6 +3,8 @@ import { BsPencil } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaUser, FaBirthdayCake } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import deteleUser from "../lib/deleteUser";
+import Swal from "sweetalert2";
 
 const CardUser = ({ user, setshowModal, useForm2, setEdit }) => {
 
@@ -20,6 +22,29 @@ const CardUser = ({ user, setshowModal, useForm2, setEdit }) => {
     setEdit(user.id)
   }
 
+  const delUser = (id) => {
+
+    Swal.fire({
+      title: 'Desea eliminar este usuario?',
+      text: "Si lo hace no podrá revertir el proceso!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deteleUser(id).then( res => {})
+        Swal.fire(
+          'Eliminado!',
+          'Su usuario a sido eliminado.',
+          'success'
+        )
+      }
+    })
+
+    
+  }
   return (
     <article className="flex justify-center gap-5  mb-4 w-[90%]">
       <div className="flex flex-col gap-5">
@@ -27,7 +52,8 @@ const CardUser = ({ user, setshowModal, useForm2, setEdit }) => {
         onClick={()=>updateUser(user)}>
           <BsPencil />
         </div>
-        <div className="h-[40px] w-[40px] bg-[#EA2779] text-white rounded-full flex justify-center items-center cursor-pointer">
+        <div className="h-[40px] w-[40px] bg-[#EA2779] text-white rounded-full flex justify-center items-center cursor-pointer"
+        onClick={()=> delUser(user.id)} >
           <AiOutlineClose />
         </div>
       </div>
